@@ -13,3 +13,5 @@ mensaje = input("--> ")
 while mensaje != "FIN":
 	datagrama = socket.sendto(mensaje.encode("utf-8"),(addr,puerto))
 	mensaje=input("--> ")
+
+socket.close()

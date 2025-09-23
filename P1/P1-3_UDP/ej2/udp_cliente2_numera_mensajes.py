@@ -19,3 +19,4 @@ while mensaje != "FIN":
 	aux += 1
 	mensaje = str(aux) + ": " + input("")
 
+socket.close()
