@@ -69,4 +69,5 @@ if __name__ == "__main__":
 
         print(f"Mensaje recibido del servidor: '{mensaje[:-2]}'")  # Quitarle el "\r\n"
 
+    s.send(encode_msg("FINAL"))
     s.close()
