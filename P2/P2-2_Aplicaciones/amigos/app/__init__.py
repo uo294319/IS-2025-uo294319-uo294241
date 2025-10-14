@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask import render_template
 
 # Importamos el diccionario de configuraciones (production, development)
 from config import app_config
@@ -29,13 +30,14 @@ def create_app(config_name):
     # la URL para conectar con la base de datos sql
     db.init_app(app)
 
+    @app.route('/amigos')
+    def hola_mundo():
+        # Obtener lista de amigos de la base de datos
+        from app.models import Amigo
+        amigos = Amigo.query.all()
+        # Retornar el HTML con la tabla de amigos
+        return render_template('tabla_amigos.html', amigos=amigos)
+
     migrate = Migrate(app, db)
     from app import models
-    return app
-
-    # Configuremos una ruta de prueba para la app
-    @app.route("/")
-    def prueba():
-        return "¡Hola Flask con MariaDB!"
-
     return app
