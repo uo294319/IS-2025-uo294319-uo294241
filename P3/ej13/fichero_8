@@ -1,0 +1,418 @@
+clear
+export PS1="uo294241>"
+clear
+/usr/bin/python3 /home/uo294241/serviciosPLs/udp_servidor1.py
+clear
+cd 
+ls
+git clone git@github.com:uo294319/IS-2025-uo294319-uo294241.git
+ssh-keygen
+cat /home/uo294241/.ssh/id_ed25519
+cat /home/uo294241/.ssh/id_ed25519.pub
+git clone git@github.com:uo294319/IS-2025-uo294319-uo294241.git
+python3 udp_servidor1.py
+Escribe un cliente UDP que, en un bucle, lea una línea de texto del teclado y se la envíe en un datagrama al servidor anterior, hasta que la línea leída sea FIN. El cliente recibirá por línea de comandos la IP y puerto del servidor, o asumirá como valores por defecto “localhost” y 9999. Guárdalo como udp_cliente1.pyEscribe un cliente UDP que, en un bucle, lea una línea de texto del teclado y se la envíe en un datagrama al servidor anterior, hasta que la línea leída sea FIN. El cliente recibirá por línea de comandos la IP y puerto del servidor, o asumirá como valores por defecto “localhost” y 9999. Guárdalo como udp_cliente1.pyEscribe un cliente UDP que, en un bucle, lea una línea de texto del teclado y se la envíe en un datagrama al servidor anterior, hasta que la línea leída sea FIN. El cliente recibirá por línea de comandos la IP y puerto del servidor, o asumirá como valores por defecto “localhost” y 9999. Guárdalo como udp_cliente1.py
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P1/udp_cliente1.py
+ls
+cd P1
+ls
+python3 udp_servidor1.py
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P1/udp_cliente1.py
+clear
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P1/P1-3_UDP/udp_cliente1.py
+ls
+cd P1
+ls
+cd P1-3_UDP/
+ls
+clear
+python3 udp_cliente1.py
+ls
+cd ej2
+python3 udp_cliente2_numera_mensajes.py 
+cd ..
+cd ej3
+ls
+python udp_cliente3_espera_ok.py 
+python3 udp_cliente3_espera_ok.py 
+cd ..
+cd ej6
+ls
+clear
+python3 udp_cliente6_broadcast.py 
+clear
+python3 udp_cliente6_broadcast.py 
+clear
+cd ..
+cd ej7
+ls
+clear
+bash udp_docker_lanzar_cliente.sh 
+clear
+bash udp_docker_lanzar_cliente.sh 
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P1/P1-3_UDP/udp_servidor1.py
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P1/P1-3_UDP/udp_cliente1.py
+clear
+python3 udp_servidor1.py
+ls
+cd P1
+cd P1-3_UDP/
+ls
+cleAR
+clear
+python3 udp_servidor1.py
+clear
+ls
+cd ej2
+ls
+python3 udp_servidor2_simula_perdidas.py 
+ls
+cd ..
+ls
+cd ej3
+ls
+python3 udp_servidor3_con_ok.py 
+clear
+ls
+cd ..
+ls
+cd ej 6
+ls
+cd ej6
+ls
+python3 udp_servidor6_broadcast.py 
+python3 udp_servidor6_broadcast.py ls
+clear
+cd ..
+cd ej7
+ls
+bash udp_docker_lanzar_servidores.sh 
+docker inspect pruebas
+docker ls
+docker ps
+docker list
+clear
+docker network create pruebas
+bash udp_docker_lanzar_servidores.sh 
+docker inspect
+docker ps
+ipconfig
+ifconfig
+printenv > "/tmp/tmp-1547zxQFqCfSYPPu.txt"
+python udp_servidor5_mejorado.py
+python3 udp_servidor5_mejorado.py
+ls
+cd P1
+ls
+cd P1-3_UDP/
+ls
+cd ej5
+ls
+python3 udp_servidor5_mejorado.py
+cd ..
+cd ej1
+cd P1-3
+cd P1-3_UDP/
+ls
+cd ej1
+python3 udp_servidor1.py
+cd ..
+cd ej2
+python3 udp_servidor2_simula_perdidas.py 
+cd ..
+cd ej3
+python3 udp_servidor3
+
+cd ..
+cd ej4
+cd ..
+cd ej3
+python3 udp_servidor3
+python3 udp_servidor3_con_ok.py 
+cd ..
+cd ej5
+python3 udp_servidor5_mejorado.py 
+cd ..
+cd ej6
+python3 udp_servidor5_mejorado.py
+python3 udp_servidor6_broadcast.py 
+cd ..
+cd ej7
+ls
+bash udp_servidor6_broadcast.py 
+bash udp_docker_lanzar_servidores.sh 
+cd ..
+cd ej3
+python3 udp_servidor3_con_ok.py 
+ls
+cd Pº
+cd P1
+cd P1-3
+cd P1-3_UDP/
+cd ej5
+ls
+python3 udp_cliente5_mejorado.py
+cd ..
+cd ej1
+ls
+python3 udp_cliente1.py
+cd --
+cd IS-2025-uo294319-uo294241/
+ls
+cd P1
+cd P1-3_UDP/
+ls
+cd ej2
+python3 udp_cliente2
+python3 udp_cliente2_numera_mensajes.py 
+cd ..
+cd ej3
+python3 udp_cliente3_espera_ok.py 
+cd ..
+cd ej4
+python3 udp_cliente4_reintenta.py 
+cd ..
+cd ej5
+python3 udp_cliente5_mejorado.py 
+cd ..
+cd ej6
+python3 udp_cliente6_broadcast.py 
+cd ..
+cd ej7
+cd ..
+clear
+cd ej7
+bash udp_cliente6_broadcast.py 
+bash udp_docker_lanzar_cliente.sh 
+cd ..
+cd ej4
+python3 udp_cliente4_reintenta.py 
+clear
+ipconfig
+ifconfig
+sudo netstat -4tln
+sudo apt install nginx
+nginx -V
+sudo systemctl stop nginx
+sudo apt remove nginx
+sudo apt autoremove
+docker pull nginx
+docker run -d --rm --network pruebas --name nginx nginx
+docker ps
+netstat -4tpl
+docker inspect nginx
+wget 172.18.0.2
+wget 172.18.0.2/50x.html
+
+docker ps
+docker stop nginx
+ls
+cd P2
+ls
+cd html/
+ls
+nginx
+nginx -p 80:80 -v $(pwd):/usr/share/nginx/html
+nginx -p 80:80
+docker pull nginx
+docker images
+
+docker run -d --rm --network pruebas --name nginx nginx
+docker run -d --rm --network pruebas --name nginx nginx -p 80:80 -v $(pwd):/usr/share/nginx/html
+docker stop
+docker stop nginx
+docker run -d --rm --network pruebas --name nginx nginx -p 80:80 -v $(pwd):/usr/share/nginx/html
+docker ps
+docker ps -a
+cd ..
+docker run -d --rm --network pruebas --name nginx nginx -p 80:80 -v $(pwd):/usr/share/nginx/html
+docker ps
+docker run --rm --network pruebas --name nginx nginx -p 80:80 -v $(pwd):/usr/share/nginx/html
+cd html/
+docker run -d --rm --network pruebas --name nginx -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
+docker ps
+nginx stop
+cd ..
+docker run --rm -d --network pruebas    --name nginx -p 80:80    -v $(pwd)/html:/usr/share/nginx/html    -v $(pwd)/sitios_nginx:/etc/nginx/conf.d nginx
+docker ps
+docker stop
+docker stop nginx
+docker run --rm -d --network pruebas    --name nginx -p 80:80    -v $(pwd)/html:/usr/share/nginx/html    -v $(pwd)/sitios_nginx:/etc/nginx/conf.d nginx
+.
+ls
+bash lanzar1.sh 
+docker ps
+docker run --rm -d --network pruebas    --name nginx -p 81:81    -v $(pwd)/html2:/usr/share/nginx/html2    -v $(pwd)/sitios_nginx:/etc/nginx/conf.d nginx
+docker ps
+docker run --rm --network pruebas    --name nginx -p 81:81    -v $(pwd)/html2:/usr/share/nginx/html2    -v $(pwd)/sitios_nginx:/etc/nginx/conf.d nginx
+docker ps
+docker run --rm --network pruebas    --name nginx -p 81:81    -v $(pwd)/html2:/usr/share/nginx/html2    -v $(pwd)/sitios_nginx:/etc/nginx/conf.d nginx
+docker ps
+bash lanzar1.sh 
+docker stop *
+docker stop nginx
+docker cp nginx:/etc/nginx/nginx.conf configuracion_nginx/nginx.conf
+docker run --rm --network pruebas    --name nginx -p 81:81    -v $(pwd)/html2:/usr/share/nginx/html2    -v $(pwd)/sitios_nginx:/etc/nginx/conf.d nginx
+docker stop nginx
+bash lanzar1.sh 
+cd P2-1_Instalacion/
+bash lanzar1.sh 
+docker exec -it nginx bash
+docker cp nginx:/etc/nginx/nginx.conf configuracion_nginx/nginx.conf
+sudo add-apt-repository universe
+sudo apt install python3-venv
+bash env_setup.sh 
+ls $HOME
+source ~/flaskenv/bin/activate
+FLASK_APP=hola_flask.py flask run --host=0.0.0.0
+cd h
+cd hola_flask/
+FLASK_APP=hola_flask.py flask run --host=0.0.0.0
+pip install gunicorn
+gunicorn -b "0.0.0.0:5000" -w 4 hola_flask:app
+exit
+ls
+cd P2
+ls
+cd P2-1_Instalacion/
+cd hola_flask/
+docker build -t gunicornflask:1.0  .
+docker images
+docker run --rm -d -p 5050:5000 gunicornflask:1.0
+docker run -d --rm --name hola-flask     --network pruebas gunicornflask:1.0
+docker ps
+docker container prune
+docker ps
+docker stop $(docker ps -q)
+docker run -d --rm --name hola-flask     --network pruebas gunicornflask:1.0
+docker ps
+docker pull mariadb
+docker run --name mariadb -e MYSQL_ROOT_PASSWORD=claveroot    --rm --network pruebas -d mariadb
+docker ps
+docker stop $(docker ps -q)
+docker run --name mariadb -e MYSQL_ROOT_PASSWORD=claveroot    --rm --network pruebas -d mariadb
+docker ps
+docker run --rm -it --network pruebas mariadb bash
+docker stop $(docker ps -q)
+docker run --name mariadb -e MYSQL_ROOT_PASSWORD=claveroot    -v $(pwd)/basedatos:/var/lib/mysql    --rm --network pruebas -d mariadb
+docker stop $(docker ps -q)
+netstat -tunlp
+docker ps
+docker ps -a
+docker container prune
+docker ps -a
+ls
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P2/P2-1_Instalacion/hola_flask/hola_flask.py
+docker build -t gunicornflask:1.0 .
+cd P2
+cd P2-1_Instalacion/
+ls
+bash lanzarhtml1.sh 
+bash lanzar1.sh 
+docker stop nginx
+docker ps
+bash lanzar1.sh 
+cd hola_flask/
+docker build -t gunicornflask:1.0  .
+source ~/flaskenv/bin/activate
+FLASK_APP=hola_flask.py flask run --host=0.0.0.0
+gunicorn -b "0.0.0.0:5000" -w 4 hola_flask:app
+exit
+cd P2
+cd P2-1_Instalacion/
+bash lanzar1.sh 
+docker stop nginx
+bash lanzar1.sh 
+cd hola_flask/
+docker stop nginx
+cd --
+cd IS-2025-uo294319-uo294241/
+cd P2/
+cd P2-1_Instalacion/
+bash lanzarhtml1.sh 
+docker run -d --rm --name hola-flask     --network pruebas gunicornflask:1.0
+docker ps
+netstat
+netstat -tunlp
+ipconfig
+ifconfig
+ls
+cd IS-2025-uo294319-uo294241/
+LS
+ls
+cd P3
+ls+
+ls
+sudo nano /etc/inetd.conf
+sudo systemctl restart inetd
+sudo apt-get install telnetd
+sudo systemctl restart inetd
+telnet localhost
+nano /etc/inetd.conf
+sudo nano /etc/inetd.conf
+sudo systemctl restart inetd
+telnet localhost
+cd P3
+import socket
+s = socket.socket()
+s.connect(("localhost", 23))
+respuesta = s.recv(1024)
+python3
+ls /home
+exit
+ls /home/ 
+exit
+ps -ef  
+nohup python3 udp_servidor3_con_ok.py & 
+exit
+ls /home
+exit
+ls /home/ 
+exit
+ps -ef  
+nohup python3 udp_servidor3_con_ok.py & 
+exit
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P3/telnet1_ejemplo.py
+netstat -tunlp
+sudo systemctl restart inetd
+netstat -tunlp
+sudo nano /etc/inetd.conf
+netstat -tunlp
+sudo systemctl restart inetd
+netstat -tunlp
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P3/telnet1_ejemplo.py
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P3/telnet1_ejemplo_mejorado.py
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P3/ej2/telnet2_lanza_servidor.py
+sudo apt-get install openssh-server
+ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub
+256 SHA256:7AMMrgzhQ8eblDSfTRE+Xw2DaP+C2EZXTNJYGNdl6e0 root@is-02 (ECDSA)
+# Obtener fingerprint de la clave ECDSA, usada por cliente ssh
+$ ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub
+256 SHA256:7AMMrgzhQ8eblDSfTRE+Xw2DaP+C2EZXTNJYGNdl6e0 root@is-02 (ECDSA)
+# Obtener fingerprint de la clave ed25519, usada por PuTTY
+$ ssh-keygen -l -f /etc/ssh/ssh_host_ed25519_key.pub
+256 SHA256:n1DxDv/jvuG8p+v1TB7L7CoqjDm+hPMufQDxCglFVyE root@is00 (ED25519)
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P3/ej1/telnet1_ejemplo.py
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P3/ej1/telnet1_ejemplo_mejorado.py
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P3/ej2/telnet2_lanza_servidor.py
+clear
+ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub
+ssh-keygen -l -f /etc/ssh/ssh_host_ed25519_key.pub
+regedit
+clear
+ssh-keygen -l -f /etc/ssh/ssh_host_ed25519_key.pub
+cd ~/.ssh
+ls
+sudo nano authorized_keys 
+ssh keygen
+cd
+cd IS-2025-uo294319-uo294241/
+ls
+cd P3ç
+cd P3
+python3 -m venv ~/paramikoenv
+source ~/paramikoenv/bin/activate
+pip install --upgrade pip
+pip install paramiko
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P3/ej8/ssh_ejemplo_inseguro.py
+/usr/bin/python3 /home/uo294241/IS-2025-uo294319-uo294241/P3/ej10/ssh_ejemplo_seguro.py
