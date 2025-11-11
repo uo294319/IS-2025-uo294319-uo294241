@@ -2,15 +2,25 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Video HTML5 - Big Buck Bunny</title>
+  <title>Reproducción de video HTML5 - Ejercicio 2</title>
 </head>
 <body>
-  <h1>Prueba de video HTML5</h1>
-  <video width="640" controls>
-    <source src="big_buck_bunny.mp4" type="video/mp4">
-    <source src="big_buck_bunny.webm" type="video/webm">
-    <source src="big_buck_bunny.ogv" type="video/ogg">
-    Tu navegador no soporta el elemento de video.
+  <h1>Prueba de video HTML5 con múltiples fuentes</h1>
+
+  <video width="1280" height="720" controls>
+    <!-- distintas fuentes disponibles -->
+    <source src="big_buck_bunny.mp4"  type='video/mp4; codecs="avc1.64001f, mp4a.40.2"'>
+    <source src="big_buck_bunny.webm" type='video/webm; codecs="vp9, opus"'>
+    <source src="big_buck_bunny.ogv"  type='video/ogg; codecs="theora, vorbis"'>
+
+    <!-- Fallback: imagen + enlace de descarga -->
+    <p>
+      Tu navegador no soporta el video HTML5.  
+      <br>
+      <a href="big_buck_bunny.mp4">
+        <img src="big_buck_bunny_poster.png" alt="Descargar el video" width="320">
+      </a>
+    </p>
   </video>
 </body>
 </html>
