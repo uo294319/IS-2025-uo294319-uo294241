@@ -2,6 +2,10 @@ P2/P2-1_Instalacion/hola_flask/__pycache__
 P2/P2-1_Instalacion/hola_flask/basedatos
 P2/P2-2_Aplicaciones/amigos/migrations/
 P2/P2-2_Aplicaciones/basedatos
+P5/html/video5/*.mp4
+P5/html/video5/*.ogv
+P5/html/video5/*.webm
+P5/html/video5/*.png
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
