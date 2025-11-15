@@ -61,8 +61,7 @@ if __name__  == "__main__":
         msg += sc.recv(1)
 
     msg = msg.decode("utf-8")
-    print(msg)
 
     for line in msg.split("\n"):
         if "Subject:" in line or "From:" in line:
-            print(line)
+            print("\n", line)
