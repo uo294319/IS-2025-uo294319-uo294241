@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reproductor con Video.js - Big Buck Bunny</title>
+
+  <!-- CSS de Video.js desde CDN -->
+  <link href="https://vjs.zencdn.net/8.23.4/video-js.css" rel="stylesheet" />
+</head>
+
+<body>
+  <h1>Reproducción del video Big Buck Bunny con Video.js</h1>
+
+  <div class="video-container">
+    <video
+      id="my-video"
+      class="video-js vjs-default-skin"
+      controls
+      preload="auto"
+      width="640"
+      height="360"
+      poster="big_buck_bunny.jpg"   <!-- opcional, si tienes una imagen -->
+      data-setup="{}"
+    >
+      <source src="big_buck_bunny.mp4" type="video/mp4" />
+      <source src="big_buck_bunny.webm" type="video/webm" />
+      <source src="big_buck_bunny.ogv" type="video/ogg" />
+
+      <p class="vjs-no-js">
+        Para ver este vídeo, activa JavaScript y usa un navegador que
+        <a href="https://videojs.com/html5-video-support/" target="_blank">
+          soporte vídeo HTML5
+        </a>.
+      </p>
+    </video>
+  </div>
+
+  <!-- JavaScript de Video.js desde CDN -->
+  <script src="https://vjs.zencdn.net/8.23.4/video.min.js"></script>
+</body>
+</html>
