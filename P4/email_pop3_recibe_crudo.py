@@ -34,6 +34,10 @@ if __name__  == "__main__":
     #username = input("Usuario: ")
     username = "test.si2024.pl51@gmail.com"
     password = os.getenv("PSSWD")
+    if not password:
+        print("\nDale valor a la variable de entorno PSSWD")
+        print("\tEjecuta: export PSSWD=<token>\n")
+        sys.exit(1)
 
     s = socket.socket()
     s.connect((server, port))
@@ -62,6 +66,9 @@ if __name__  == "__main__":
 
     msg = msg.decode("utf-8")
 
+    print("\n", "-"*80, "\n")
     for line in msg.split("\n"):
         if "Subject:" in line or "From:" in line:
-            print("\n", line)
+            print(line)
+
+    print("\n", "-"*80, "\n")
