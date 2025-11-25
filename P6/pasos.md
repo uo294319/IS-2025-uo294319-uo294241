@@ -28,3 +28,12 @@ prosodyctl adduser ramon@ingservXX
 
 exit
 ```
+## 5 Uso del bot
+(Modificar constantes en codigo)
+### Añadir usuario bot
+```bash
+docker exec -it prosody bash
+prosodyctl adduser bot@ingservXX
+exit
+```
+Luego ejecutar `export CLAVEBOT=XXXXXX` con la clave del bot.
