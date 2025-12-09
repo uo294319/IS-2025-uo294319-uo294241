@@ -8,9 +8,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
-    val euroToDollar:Double = 1.16;
+    //val euroToDollar:Double = 1.16;
+    var euroToDollar by Delegates.notNull<Double>();
     lateinit var editTextEuros: EditText;
     lateinit var editTextDollars:EditText;
 
@@ -25,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         }
         editTextEuros = findViewById<EditText>(R.id.editTextEuros)
         editTextDollars = findViewById<EditText>(R.id.editTextDollars)
+        fetchExchangeRate();
     }
 
     fun onClickToDollars(view: View) {
@@ -45,5 +53,23 @@ class MainActivity : AppCompatActivity() {
             return
         }
         destination.setText((value * factor).toString())
+    }
+
+    private fun fetchExchangeRate() {
+        val url = URL("https://api.frankfurter.app/latest?from=EUR&to=USD")
+        val connection = url.openConnection() as HttpURLConnection
+        connection.requestMethod = "GET"
+        val inputStream = connection.inputStream
+        val reader = BufferedReader(InputStreamReader(inputStream))
+        val response = StringBuilder()
+        var line: String?
+        while (reader.readLine().also { line = it } != null) {
+            response.append(line)
+        }
+        reader.close()
+        val jsonResponse = response.toString()
+        val jsonObject = JSONObject(jsonResponse)
+        val rates = jsonObject.getJSONObject("rates")
+        euroToDollar = rates.getDouble("USD")
     }
 }
