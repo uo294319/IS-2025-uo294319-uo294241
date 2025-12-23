@@ -1,13 +1,17 @@
 package es.uniovi.converter
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -17,7 +21,7 @@ import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
     //val euroToDollar:Double = 1.16;
-    var euroToDollar by Delegates.notNull<Double>();
+    private val viewModel: MainViewModel by viewModels()
     lateinit var editTextEuros: EditText;
     lateinit var editTextDollars:EditText;
 
@@ -32,17 +36,19 @@ class MainActivity : AppCompatActivity() {
         }
         editTextEuros = findViewById<EditText>(R.id.editTextEuros)
         editTextDollars = findViewById<EditText>(R.id.editTextDollars)
-        fetchExchangeRate();
+        viewModel.fetchExchangeRate();
     }
 
-    fun onClickToDollars(view: View) {
+    fun onClickToDollars(view: android.view.View) {
         //Toast.makeText(this, "¡Me han pulsado!", Toast.LENGTH_SHORT).show()
-        convert(editTextEuros, editTextDollars, euroToDollar)
+        val factor = viewModel.euroToDollar
+        convert(editTextEuros, editTextDollars, factor)
     }
 
-    fun onClickToEuros(view: View) {
+    fun onClickToEuros(view: android.view.View) {
         //Toast.makeText(this, "¡Me han pulsado!", Toast.LENGTH_SHORT).show()
-        convert(editTextDollars, editTextEuros, 1 / euroToDollar)
+        val factor = viewModel.euroToDollar
+        convert(editTextDollars, editTextEuros, 1 / factor)
     }
 
     private fun convert(source: EditText, destination: EditText, factor: Double) {
@@ -53,23 +59,5 @@ class MainActivity : AppCompatActivity() {
             return
         }
         destination.setText((value * factor).toString())
-    }
-
-    private fun fetchExchangeRate() {
-        val url = URL("https://api.frankfurter.app/latest?from=EUR&to=USD")
-        val connection = url.openConnection() as HttpURLConnection
-        connection.requestMethod = "GET"
-        val inputStream = connection.inputStream
-        val reader = BufferedReader(InputStreamReader(inputStream))
-        val response = StringBuilder()
-        var line: String?
-        while (reader.readLine().also { line = it } != null) {
-            response.append(line)
-        }
-        reader.close()
-        val jsonResponse = response.toString()
-        val jsonObject = JSONObject(jsonResponse)
-        val rates = jsonObject.getJSONObject("rates")
-        euroToDollar = rates.getDouble("USD")
     }
 }
