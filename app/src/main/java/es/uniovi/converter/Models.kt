@@ -9,6 +9,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 data class Rates(
     val USD: Double
 )
+
+data class ExchangeInfo(
+    val rate: Double,
+    val date: String
+)
+
 data class ExchangeRateResponse(
     val amount: Double,
     val base: String,
