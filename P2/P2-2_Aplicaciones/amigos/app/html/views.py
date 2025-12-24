@@ -64,7 +64,7 @@ def save_amigo():
         device = request.form.get("device", "0")
 
         # Creamos el amigo y lo añadimos a la base de datos
-        amigo = Amigo(name=name, lati=lati, device=device)
+        amigo = Amigo(name=name, lati=lati, longi=longi, device=device)
         db.session.add(amigo)
         db.session.commit()
     else:
