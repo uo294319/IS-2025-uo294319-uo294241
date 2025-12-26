@@ -28,7 +28,9 @@ interface AmigosApiService {
     suspend fun getAmigos(): Response<List<Amigo>>
 
     @GET("/api/amigo/byName/{name}")
-    suspend fun getAmigoByName(): Response<Amigo>
+    suspend fun getAmigoByName(
+        @Path("name") amigoName: String
+    ): Response<Amigo>
 
     @PUT("api/amigo/{id}")
     suspend fun updateAmigoPosition(

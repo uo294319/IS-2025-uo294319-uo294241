@@ -59,7 +59,11 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getAmigosList()
         checkAndRequestLocationPermissions()
-        askUserName()
+
+        // Solo preguntamos si no tenemos ya un nombre guardado en el ViewModel
+        if (viewModel.userId == null) {
+            askUserName()
+        }
     }
 
     override fun onResume() {

@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private var userName: String? = null
+    var userId: Int? = null
 
     private val locationFlow = application.createLocationFlow()
 
@@ -75,13 +76,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                             lati = location.latitude.toString(),
                             longi = location.longitude.toString()
                         )
-                        val response = RetrofitClient.api.updateAmigoPosition(9, payload) // ID=9 NAME=uo294319
-
-                        if (response.isSuccessful) {
-                            Log.d("API", "Posición actualizada. Servidor responde: ${response.body()}")
-                        } else {
-                            Log.e("API", "Error al actualizar posición: ${response.code()}")
+                        userId?.let { idNoNulo ->
+                            val response = RetrofitClient.api.updateAmigoPosition(idNoNulo, payload)
+                            if (response.isSuccessful) {
+                                Log.d("API", "Posición actualizada para ID $idNoNulo. Servidor responde: ${response.body()}")
+                            } else {
+                                Log.e("API", "Error al actualizar posición para ID $idNoNulo: ${response.code()}")
+                            }
                         }
+
                     } catch (e: Exception) {
                         Log.e("API", "Excepción al actualizar posición", e)
                     }
@@ -98,6 +101,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun setUserName(name: String) {
         userName = name
         Log.d("MainViewModel", "Nombre de usuario establecido: $userName")
+
+        viewModelScope.launch {
+            try {
+                val response = RetrofitClient.api.getAmigoByName(name)
+
+                if (response.isSuccessful && response.body() != null) {
+                    val amigo = response.body()
+                    userId = amigo?.id
+                    Log.d("MainViewModel", "ID obtenido exitosamente: $userId")
+                } else {
+                    Log.e("MainViewModel", "Error al obtener ID del usuario: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("MainViewModel", "Excepción al buscar usuario por nombre", e)
+            }
+        }
     }
 }
 
