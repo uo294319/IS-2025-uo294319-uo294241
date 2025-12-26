@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, abort
 from . import html
-from ..models import Amigo
-from .. import db
+from ..models import Amigo, get_all_devices
+from .. import db, fcm
 
 
 @html.route("/amigos")
@@ -25,6 +25,9 @@ def delete_amigo(id):
     # Una vez obtenido, lo borramos
     db.session.delete(amigo)
     db.session.commit()
+
+    tokens = get_all_devices()
+    fcm.notificar_amigos(tokens, "Datos de amigo borrados")
 
     # Y redireccionamos a la vista /amigos
     return redirect(url_for('html.tabla_amigos'))
@@ -67,6 +70,9 @@ def save_amigo():
         amigo = Amigo(name=name, lati=lati, longi=longi, device=device)
         db.session.add(amigo)
         db.session.commit()
+
+        tokens = get_all_devices()
+        fcm.notificar_amigos(tokens, "Datos de amigo nuevos")
     else:
         # En este caso se trata de un amigo de la base de datos
         amigo = Amigo.query.get_or_404(int(id))
@@ -85,5 +91,7 @@ def save_amigo():
             amigo.device = device
         # Una vez modificado, lo guardamos a la base de datos
         db.session.commit()
+        tokens = get_all_devices()
+        fcm.notificar_amigos(tokens, "Datos de amigo actualizados")
     # Redireccionamos hacia la tabla-lista de amigos
     return redirect(url_for("html.tabla_amigos"))
