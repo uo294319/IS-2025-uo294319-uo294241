@@ -1,7 +1,7 @@
 from flask import request, abort, jsonify
-from .. import db
+from .. import db, fcm
 from . import api
-from ..models import Amigo
+from ..models import Amigo, get_all_devices
 
 @api.route("/amigo/<int:id>")
 def get_amigo(id):
@@ -79,6 +79,9 @@ def edit_amigo(id):
     if name or lati or longi or device:
         db.session.commit()
 
+    tokens = get_all_devices()
+    fcm.notificar_amigos(tokens, "Datos de amigo actualizados")
+
     # Y retornamos el JSON con los nuevos datos
     amigodict = {"id": amigo.id, "name": amigo.name,
                  "longi": amigo.longi, "lati": amigo.lati,
@@ -93,6 +96,8 @@ def delete_amigo(id):
     amigo = Amigo.query.get_or_404(id)
     db.session.delete(amigo)
     db.session.commit()
+    tokens = get_all_devices()
+    fcm.notificar_amigos(tokens, "Datos de amigo borrados")
     return ('', 204)
 
 
@@ -132,6 +137,9 @@ def new_amigo():
     amigo = Amigo(name=name, lati=lati, longi=longi, device=device)
     db.session.add(amigo)
     db.session.commit()
+
+    tokens = get_all_devices()
+    fcm.notificar_amigos(tokens, "Datos de amigo nuevos")
 
     # Y retornamos el JSON con los datos del nuevo amigo
     amigodict = {"id": amigo.id, "name": amigo.name,
