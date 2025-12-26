@@ -6,8 +6,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -24,7 +26,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         Log.d("MainViewModel", "MainViewModel created")
-        startPolling() // Empezamos el polling
+        //startPolling() // Empezamos el polling
     }
 
     fun getAmigosList() {
@@ -53,7 +55,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun startPolling() {
+    /*private fun startPolling() {
         viewModelScope.launch {
             while (true) {
                 Log.d("Polling", "Timer disparado, pidiendo amigos...")
@@ -61,7 +63,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 delay(5000)
             }
         }
-    }
+    }*/
 
     fun startLocationUpdates() {
         // Lanzamos una corutina para consumir asíncronamente del Flow
@@ -109,7 +111,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 if (response.isSuccessful && response.body() != null) {
                     val amigo = response.body()
                     userId = amigo?.id
-                    Log.d("MainViewModel", "ID obtenido exitosamente: $userId")
+                    val token = FirebaseMessaging.getInstance().token.await()
+                    Log.d("MainViewModel", "Usuario: $userName, Id: $userId, Token: $token")
+
+                    RetrofitClient.api.updateAmigoDeviceToken(userId!!, DeviceTokenPayload(token))
                 } else {
                     Log.e("MainViewModel", "Error al obtener ID del usuario: ${response.code()}")
                 }

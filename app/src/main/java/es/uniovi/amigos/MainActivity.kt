@@ -2,7 +2,10 @@ package es.uniovi.amigos
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +28,17 @@ import org.osmdroid.views.overlay.Marker
 class MainActivity : AppCompatActivity() {
     private var map: MapView? = null // Referencia al objeto MapView
     private val viewModel: MainViewModel by viewModels()
+
+    // --- DEFINE EL OBJETO de tipo BroadcastReceiver ---
+    private val updateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            // Comprueba que es el aviso que nos interesa
+            if (intent?.action == "updateFromServer") {
+                Log.d("MainActivity", "¡Aviso de FCM recibido! hay que actualizar amigos...")
+                viewModel.getAmigosList()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,12 +82,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        map?.onResume()
+        map?.onResume() // Tu código antiguo
+
+        // --- REGISTRA EL RECEPTOR ---
+        // Le dice a la Activity: "Cuando estés en primer plano,
+        // empieza a escuchar avisos de tipo 'updateFromServer'"
+        Log.d("MainActivity", "Registrando el receptor de avisos...")
+        val filter = IntentFilter("updateFromServer",)
+        registerReceiver(updateReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
     }
 
     override fun onPause() {
         super.onPause()
-        map?.onPause()
+        map?.onPause() // Tu código antiguo
+
+        // --- DESREGISTRA EL RECEPTOR ---
+        // Le dice a la Activity: "Vas a pasar a segundo plano,
+        // deja de escuchar para no gastar recursos."
+        Log.d("MainActivity", "Desregistrando el receptor de avisos...")
+        unregisterReceiver(updateReceiver)
     }
 
     fun centrarMapaEnEuropa() {

@@ -22,6 +22,10 @@ data class LocationPayload(
     val longi: String
 )
 
+data class DeviceTokenPayload(
+    val device: String
+)
+
 // Interfaz que define el endpoint para obtener la lista de amigos.
 interface AmigosApiService {
     @GET("/api/amigos")
@@ -36,6 +40,12 @@ interface AmigosApiService {
     suspend fun updateAmigoPosition(
         @Path("id") amigoId: Int,
         @Body payload: LocationPayload
+    ): Response<Amigo>
+
+    @PUT("api/amigo/{id}")
+    suspend fun updateAmigoDeviceToken(
+        @Path("id") amigoId: Int,
+        @Body payload: DeviceTokenPayload
     ): Response<Amigo>
 }
 
