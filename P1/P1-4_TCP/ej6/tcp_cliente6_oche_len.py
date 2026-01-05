@@ -55,23 +55,26 @@ if __name__ == "__main__":
         "ABCDE"
     ]
 
-    for mensaje in mensajes:
+    for mensaje_str in mensajes:
 
-        mensaje = encode_msg(mensaje)
+        mensaje_len  = "%d\n" % len(bytes(mensaje_str, "utf8"))
+        mensaje = mensaje_len + mensaje_str
 
         if len(mensaje) > MAX_MSG_SIZE:
             print("El mensaje es demasiado largo (máx. 78 caracteres)")
             sys.exit(1)
 
-        datagrama = s.sendall(mensaje)
+        datagrama = s.sendall(bytes(mensaje, "utf8"))
         print(f"Mensaje enviado: {repr(mensaje)}")
 
     f = s.makefile(encoding="utf8", newline="\n")
 
     for mensaje in mensajes:
-        mensaje = receive_msg(f)
+        respuesta_len = int(f.readline())
+        respuesta = f.read(respuesta_len)
 
-        print(f"Mensaje recibido del servidor: '{repr(mensaje)}'")
+        print(f"Mensaje recibido del servidor: '{repr(("%d\n" % respuesta_len)+respuesta)}'")
 
-    s.send(encode_msg("FINAL"))
+
+    s.send(bytes("5\n" + "FINAL", "utf8"))
     s.close()
