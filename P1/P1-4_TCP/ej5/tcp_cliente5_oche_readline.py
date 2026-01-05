@@ -11,15 +11,7 @@ MAX_MSG_SIZE = 80  # Incluyendo el "\r\n"
 # FUNCIONES AUXILIARES
 # ============================================================
 
-def encode_msg(msg):
-    """Codifica el mensaje añadiéndole el fin de línea"""
-    return bytes(msg + "\r\n", "utf8")
-
-def decode_msg(msg):
-    """Decodifica el mensaje quitándole el fin de línea"""
-    return str(msg, "utf8")[:-2]
-
-def recibe_mensaje(s) -> str:
+def recibe_mensaje(s) -> bytes:
     buffer = []
     terminator = [b"\r", b"\n"]
 
@@ -62,23 +54,22 @@ if __name__ == "__main__":
     ]
 
     for mensaje in mensajes:
+        mensaje += "\r\n"  # Añadir el fin de línea
+        mensaje_bytes = bytes(mensaje, "utf8")
 
-        mensaje = encode_msg(mensaje)
-
-        if len(mensaje) > MAX_MSG_SIZE:
+        if len(mensaje_bytes) > MAX_MSG_SIZE:
             print("El mensaje es demasiado largo (máx. 78 caracteres)")
             sys.exit(1)
 
-        datagrama = s.sendall(mensaje)
+        datagrama = s.sendall(mensaje_bytes)
         print(f"Mensaje enviado: {repr(mensaje)}")
 
     f = s.makefile(encoding="utf8", newline="\r\n")
 
     for mensaje in mensajes:
-        mensaje = f.readline()
-        mensaje = mensaje[:-2]  # Quitarle el "\r\n"
+        respuesta_str = f.readline()
 
-        print(f"Mensaje recibido del servidor: '{repr(mensaje)}'")
+        print(f"Mensaje recibido del servidor: '{repr(respuesta_str)}'")
 
-    s.send(encode_msg("FINAL"))
+    s.send(bytes("FINAL\r\n", "utf8"))
     s.close()
