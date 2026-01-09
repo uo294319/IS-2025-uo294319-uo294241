@@ -10,7 +10,7 @@ JID = "bot@ingserv123"
 IP = "localhost"
 PORT = 5222
 ENV_CLAVE = "CLAVEBOT"
-CERT_FILE = "./etc/prosody/certs/ingserv123.crt"
+CERT_FILE = "../etc/prosody/certs/ingserv123.crt"
 
 # Esta es la sintaxis de herencia en Python
 class MyBot(slixmpp.ClientXMPP):
@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
     # Obtener credenciales
     
-    clave = os.environ.get("CLAVEBOT")
+    clave = os.environ.get(ENV_CLAVE)
     if clave is None:
         clave = getpass.getpass("Contraseña: ")
 
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         ssl_context.verify_mode = ssl.CERT_NONE
 
     # Instanciar el bot
-    client = MyBot(JID, ENV_CLAVE)
+    client = MyBot(JID, clave)
 
     # Asignar el contexto SSL a la instancia del cliente
     client.ssl_context = ssl_context

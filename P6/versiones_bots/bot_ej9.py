@@ -18,9 +18,16 @@ class MyBot(slixmpp.ClientXMPP):
     def __init__(self, jid, password):
         super().__init__(jid, password)
 
+        self.register_plugin('xep_0085')
+
         # Registrar los eventos y sus manejadores
         self.add_event_handler("session_start", self.callback_para_session_start)
         self.add_event_handler("message", self.callback_para_message)
+
+        self.add_event_handler("chatstate_active", self.on_active)
+        self.add_event_handler("chatstate_composing", self.on_composing)
+        self.add_event_handler("chatstate_paused", self.on_paused)
+        self.add_event_handler("chatstate_inactive", self.on_inactive)
 
     # Implementación de los callbacks (todos son tipo async)
     async def callback_para_session_start(self, event):
@@ -38,6 +45,36 @@ class MyBot(slixmpp.ClientXMPP):
 
         if event["type"] == "chat":
             msg = self.Message()
+            msg["to"] = event["from"]
+            msg["type"] = "chat"
+            msg["chat_state"] = "active"
+
+            if recibido.startswith("="):
+                expresion = recibido[1:] 
+
+                try:
+                    resultado = eval(expresion)
+                    msg["body"] = str(resultado)
+
+                except Exception as e:
+                    msg["body"] = f"Error al calcular: {e}"
+            else:
+                # Si no es fórmula, hacemos el ECO del Ejercicio 7
+                msg["body"] = "¿" + recibido + "?"
+            
+            msg.send()
+
+    async def on_composing(self, event):
+        print(f"{event['from'].bare} está escribiendo...")
+
+    async def on_paused(self, event):
+        print(f"{event['from'].bare} ha parado de escribir")
+
+    async def on_active(self, event):
+        print(f"{event['from'].bare} está activo")
+
+    async def on_inactive(self, event):
+        print(f"{event['from'].bare} está inactivo")
 
 # Programa principal
 if __name__ == "__main__":
