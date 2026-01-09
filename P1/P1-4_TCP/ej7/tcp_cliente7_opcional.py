@@ -12,7 +12,7 @@ MAX_MSG_SIZE = 80  # Incluyendo el "\r\n"
 # FUNCIONES AUXILIARES
 # ============================================================
 
-def encode_msg(msg):
+def encode_msg(msg) -> bytes:
     """Codifica el mensaje con su longitud al inicio."""
     msg = bytes(msg, "utf8")
     longitud = struct.pack(">H", len(msg))
@@ -20,7 +20,7 @@ def encode_msg(msg):
 
 
 
-def receive_msg(s):
+def receive_msg(s) -> tuple[bytes, str]:
     """Recibe un mensaje codificado con su longitud al inicio."""
     # 1. Read the first 2 bytes (message length)
     raw_length = s.recv(2)
@@ -32,7 +32,7 @@ def receive_msg(s):
     msg = s.recv(longitud)
 
     # 4. Decode from UTF-8 and return the message
-    return msg.decode("utf8")
+    return raw_length + msg, msg.decode("utf8")
 
 # ============================================================
 # MAIN
@@ -67,22 +67,22 @@ if __name__ == "__main__":
         "ABCDE"
     ]
 
-    for mensaje in mensajes:
+    for mensaje_str in mensajes:
 
-        mensaje = encode_msg(mensaje)
+        mensaje_bytes = encode_msg(mensaje_str)
 
-        if len(mensaje) > MAX_MSG_SIZE:
+        if len(mensaje_bytes) > MAX_MSG_SIZE:
             print("El mensaje es demasiado largo (máx. 78 caracteres)")
             sys.exit(1)
 
-        datagrama = s.sendall(mensaje)
-        print(f"Mensaje enviado: {repr(mensaje)}")
+        datagrama = s.sendall(mensaje_bytes)
+        print(f"Mensaje enviado:\t{repr(mensaje_bytes)}  \t(original: '{mensaje_str}')")
 
 
     for mensaje in mensajes:
-        mensaje = receive_msg(s)
+        respuesta_bytes, respuesta_str = receive_msg(s)
 
-        print(f"Mensaje recibido del servidor: '{repr(mensaje)}'")
+        print(f"Mensaje recibido:\t'{repr(respuesta_bytes)}  \t(original: '{respuesta_str}')")
 
     s.send(encode_msg("FINAL"))
     s.close()

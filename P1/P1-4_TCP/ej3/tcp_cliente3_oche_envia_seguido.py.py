@@ -5,19 +5,6 @@ DEFAULT_PUERTO = 9999
 DEFAULT_IP = "127.0.0.1"
 NUM_REPS = 5
 MAX_MSG_SIZE = 80  # Incluyendo el "\r\n"
-
-
-# ============================================================
-# FUNCIONES AUXILIARES
-# ============================================================
-
-def encode_msg(msg):
-    """Codifica el mensaje añadiéndole el fin de línea"""
-    return bytes(msg + "\r\n", "utf8")
-
-def decode_msg(msg):
-    """Decodifica el mensaje quitándole el fin de línea"""
-    return str(msg, "utf8")[:-2]
     
 
 # ============================================================
@@ -54,20 +41,22 @@ if __name__ == "__main__":
     ]
 
     for mensaje in mensajes:
+        mensaje += "\r\n"  # Añadir el fin de línea
+        mensaje_bytes = bytes(mensaje, "utf8")
 
-        mensaje = encode_msg(mensaje)
-
-        if len(mensaje) > MAX_MSG_SIZE:
+        if len(mensaje_bytes) > MAX_MSG_SIZE:
             print("El mensaje es demasiado largo (máx. 78 caracteres)")
             sys.exit(1)
 
-        datagrama = s.sendall(mensaje)
+        datagrama = s.sendall(mensaje_bytes)
+
+        print(f"Mensaje enviado al servidor: '{repr(mensaje)}'")
 
     for mensaje in mensajes:
-        mensaje = s.recv(MAX_MSG_SIZE)  # Nunca enviará más de 80 bytes, aunque tal vez sí menos
-        mensaje = repr(mensaje)
+        respuesta_raw = s.recv(MAX_MSG_SIZE)
+        respuesta_str = str(respuesta_raw, "utf8")
 
-        print(f"Mensaje recibido del servidor: '{mensaje[:-2]}'")  # Quitarle el "\r\n"
+        print(f"Mensaje recibido del servidor: '{repr(respuesta_str)}'") 
 
-    s.send(encode_msg("FINAL"))
+    s.send(bytes("FINAL\r\n", "utf8"))
     s.close()

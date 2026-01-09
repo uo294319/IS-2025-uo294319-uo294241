@@ -6,22 +6,6 @@ MAX_MSG_SIZE = 80  # Incluyendo el "\r\n"
 
 
 # ============================================================
-# FUNCIONES AUXILIARES
-# ============================================================
-
-def encode_msg(msg):
-    """Codifica el mensaje añadiéndole el fin de línea"""
-    longitud  = "%d\n" % len(bytes(msg, "utf8"))
-    return bytes(longitud + msg, "utf8")
-
-def receive_msg(f):
-    """Receives a message"""
-    longitud = int(f.readline())
-    msg = f.read(longitud)
-    return msg
-
-
-# ============================================================
 # SERVIR CLIENTE
 # ============================================================
 
@@ -33,25 +17,28 @@ def servir_cliente(sd, origen) -> None:
 
     while continuar:
         # Recibir el mensaje del cliente
-        mensaje = receive_msg(f)
+        mensaje_len = int(f.readline())
+        mensaje_str = f.read(mensaje_len)
 
-        if mensaje=="":  # Si no se reciben datos, es que el cliente cerró el socket
+        if mensaje_str=="":  # Si no se reciben datos, es que el cliente cerró el socket
             print("Conexión cerrada de forma inesperada por el cliente")
             sd.close()
             continuar = False
-        elif mensaje=="FINAL":
+        elif mensaje_str=="FINAL":
             print("Recibido mensaje de finalización")
             sd.close()
             continuar = False
         else:
             # Darle la vuelta
-            respuesta = mensaje[::-1]
+            respuesta_str = mensaje_str[::-1]
+            respuesta_len  = "%d\n" % len(bytes(respuesta_str, "utf8"))
+            respuesta = str(respuesta_len)+respuesta_str
 
             # Finalmente, enviarle la respuesta con un fin de línea añadido
             # Observa la transformación en bytes para enviarlo
-            sd.sendall(encode_msg(mensaje[::-1]))
+            sd.sendall(bytes(respuesta, "utf8"))
 
-            print(f"Cliente {origen[0]}:{origen[1]}: '{repr(mensaje)}' -> '{repr(respuesta)}'")
+            print(f"Cliente {origen[0]}:{origen[1]}: '{repr(("%d\n" % mensaje_len)+mensaje_str)}' -> '{repr(respuesta)}'")
 
 
 # ============================================================

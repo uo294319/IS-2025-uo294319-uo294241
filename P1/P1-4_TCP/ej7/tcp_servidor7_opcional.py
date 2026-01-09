@@ -9,7 +9,7 @@ MAX_MSG_SIZE = 80  # Incluyendo el "\r\n"
 # FUNCIONES AUXILIARES
 # ============================================================
 
-def encode_msg(msg):
+def encode_msg(msg) -> bytes:
     """Codifica el mensaje con su longitud al inicio."""
     msg = bytes(msg, "utf8")
     longitud = struct.pack(">H", len(msg))
@@ -17,7 +17,7 @@ def encode_msg(msg):
 
 
 
-def receive_msg(s):
+def receive_msg(s) -> tuple[bytes, str]:
     """Recibe un mensaje codificado con su longitud al inicio."""
     # 1. Read the first 2 bytes (message length)
     raw_length = s.recv(2)
@@ -29,7 +29,7 @@ def receive_msg(s):
     msg = s.recv(longitud)
 
     # 4. Decode from UTF-8 and return the message
-    return msg.decode("utf8")
+    return raw_length + msg, msg.decode("utf8")
 
 
 # ============================================================
@@ -43,25 +43,26 @@ def servir_cliente(sd, origen) -> None:
 
     while continuar:
         # Recibir el mensaje del cliente
-        mensaje = receive_msg(sd)
+        mensaje_bytes, mensaje_str = receive_msg(sd)
 
-        if mensaje=="":  # Si no se reciben datos, es que el cliente cerró el socket
+        if mensaje_str=="":  # Si no se reciben datos, es que el cliente cerró el socket
             print("Conexión cerrada de forma inesperada por el cliente")
             sd.close()
             continuar = False
-        elif mensaje=="FINAL":
+        elif mensaje_str=="FINAL":
             print("Recibido mensaje de finalización")
             sd.close()
             continuar = False
         else:
             # Darle la vuelta
-            respuesta = mensaje[::-1]
+            respuesta_str = mensaje_str[::-1]
+            respuesta_bytes = encode_msg(respuesta_str)
 
             # Finalmente, enviarle la respuesta con un fin de línea añadido
             # Observa la transformación en bytes para enviarlo
-            sd.sendall(encode_msg(mensaje[::-1]))
+            sd.sendall(respuesta_bytes)
 
-            print(f"Cliente {origen[0]}:{origen[1]}: '{repr(mensaje)}' -> '{repr(respuesta)}'")
+            print(f"Cliente {origen[0]}:{origen[1]}: '{repr(mensaje_bytes)}' -> '{repr(respuesta_bytes)}'")
 
 
 # ============================================================

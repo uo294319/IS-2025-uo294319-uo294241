@@ -20,24 +20,15 @@ def recvall(s , bufsize):
     return mensaje
 
 
-def encode_msg(msg):
-    """Codifica el mensaje añadiéndole el fin de línea"""
-    return bytes(msg + "\r\n", "utf8")
-
-
-def decode_msg(msg):
-    """Decodifica el mensaje quitándole el fin de línea"""
-    return str(msg, "utf8")[:-2]
-
-
 def servir_cliente(sd, origen) -> None:
     """Atiende a un cliente conectado en el socket sd"""
     continuar = True
     # Bucle de atención al cliente conectado
     while continuar:
         # Recibir el mensaje del cliente
-        mensaje = sd.recv(MAX_MSG_SIZE)  # Nunca enviará más de 80 bytes, aunque tal vez sí menos
-        mensaje = decode_msg(mensaje)  # Quitarle el "\r\n"
+        mensaje_raw = sd.recv(MAX_MSG_SIZE)  # Nunca enviará más de 80 bytes, aunque tal vez sí menos
+        mensaje_str = str(mensaje_raw, "utf8")
+        mensaje = mensaje_str[:-2]  # Quitar el "\r\n"
 
         if mensaje=="":  # Si no se reciben datos, es que el cliente cerró el socket
             print("Conexión cerrada de forma inesperada por el cliente")
@@ -49,13 +40,13 @@ def servir_cliente(sd, origen) -> None:
             continuar = False
         else:
             # Darle la vuelta
-            mensaje = mensaje[::-1]
+            respuesta_str = mensaje[::-1]+"\r\n"
 
             # Finalmente, enviarle la respuesta con un fin de línea añadido
             # Observa la transformación en bytes para enviarlo
-            sd.sendall(bytes(mensaje+"\r\n", "utf8"))
+            sd.sendall(bytes(respuesta_str, "utf8"))
 
-            print(f"Cliente {origen[0]}:{origen[1]}: '{mensaje[:-2]}' -> '{mensaje}'")
+            print(f"Cliente {origen[0]}:{origen[1]}: '{repr(mensaje_str)}' -> '{repr(respuesta_str)}'")
 
 
 # ============================================================
